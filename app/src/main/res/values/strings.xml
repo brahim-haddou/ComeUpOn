@@ -1,3 +1,28 @@
 <resources>
+
+    <string name="map_key" translatable="false">AIzaSyDx3RnPp_5wmyugjbeXO3iHUAwMPKwaBrc</string>
+
     <string name="app_name">ComeUpOn</string>
+    <string name="StartText">By Brahim And Anir</string>
+    <string name="ImageText">logo image</string>
+    <string name="Welcome">Hello There, Welcome To ComeUpOn</string>
+    <string name="SingIn_text">Sign In to continue</string>
+    <string name="UserName">UserName</string>
+    <string name="password">PassWord</string>
+    <string name="forget_password">Forget PassWord</string>
+    <string name="sign_in">Sign In</string>
+    <string name="new_user_sign_up">New User? SIGN UP</string>
+    <string name="welcome">Welcome To ComeUpOn</string>
+    <string name="signup_to_start_your_journey">SignUp to start your Journey</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="already_have_an_account_login">ALREADY HAVE AN ACCOUNT? LOGIN</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="EventDate">20 August</string>
+    <string name="EventHour">21h-23h</string>
+    <string name="todo">TODO</string>
+    <string name="title_activity_test">Map</string>
+    <string name="search_text">Search..</string>
+    <string name="text">I am a newbie in Android. I have a requirement where I have to add the imageViews dynamically onto a linear layout and then have to animate each image individually. I am not aware of the way to add the imageViews dynamically onto a linear layout. Plz help me out. Thanks</string>
 </resources>

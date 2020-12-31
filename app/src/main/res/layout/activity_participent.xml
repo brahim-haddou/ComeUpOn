@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.comeupon.eventHomeList.MapCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/event_participants_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    card_view:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/participant_image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:contentDescription="@string/todo"
+            android:src="@mipmap/logo" />
+
+        <TextView
+            android:id="@+id/participant_username"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/purple_200"
+            android:contentDescription="@string/UserName" />
+
+
+
+        <RelativeLayout
+            android:paddingEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <Button
+                android:id="@+id/participant_accept_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:background="@drawable/date_shape"
+                android:elevation="2dp"
+                android:padding="8dp"
+                android:shadowColor="@color/purple_200"
+                android:text="Accept" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</com.example.comeupon.eventHomeList.MapCardView>
