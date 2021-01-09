@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comeupon.eventHomeList.EventMapListActivity;
+import com.example.comeupon.eventHomeList.EventListActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class SignInActivity extends AppCompatActivity {
@@ -52,10 +52,8 @@ public class SignInActivity extends AppCompatActivity {
             finish();
         });
         SignIn.setOnClickListener(view -> {
-            Intent intent = new Intent(this, EventMapListActivity.class);
+            Intent intent = new Intent(this, EventListActivity.class);
             startActivity(intent);
         });
     }
-
-
 }

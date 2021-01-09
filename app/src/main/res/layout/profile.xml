@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".event.EventActivity"
     android:layout_width="350dp"
     android:layout_height="wrap_content"
     app:layout_constraintCircleRadius="40dp"
@@ -15,7 +16,7 @@
         tools:ignore="MissingConstraints">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:padding="20dp"
             android:background="@color/purple_200">
 
@@ -25,14 +26,14 @@
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="follow" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/profile_cardview_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerVertical="true"
                 app:cardCornerRadius="50dp">
                 <ImageView
@@ -48,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Full Name"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:fontFamily="@font/abril_fatface"
                 android:layout_toEndOf="@id/profile_cardview_image"
                 android:layout_centerVertical="true"
@@ -60,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/UserName"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:fontFamily="@font/abril_fatface"
                 android:layout_toEndOf="@id/profile_cardview_image"
@@ -75,11 +76,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="2dp"
-            android:layout_marginTop="-75dp">
+            android:layout_marginTop="-60dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 app:cardBackgroundColor="@color/purple_200"
                 app:cardElevation="10dp"
                 android:layout_weight="1"
@@ -119,7 +120,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 app:cardBackgroundColor="@color/purple_200"
                 app:cardElevation="10dp"
                 android:layout_weight="1"
@@ -164,25 +165,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Full Name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/profile_full_name_input"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/user"
-                    android:text="Full Name" />
-            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:focusable="false"
                 android:focusableInTouchMode="false"

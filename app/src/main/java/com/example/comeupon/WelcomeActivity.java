@@ -19,7 +19,6 @@ public class WelcomeActivity extends AppCompatActivity {
     TextView TextLogo, TextStart;
     View ImageLogo;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,7 @@ public class WelcomeActivity extends AppCompatActivity {
         TextLogo.setAnimation(middleAnimation);
         TextStart.setAnimation(bottomAnimation);
 
-        int TIME_OUT = 2500;
+        int TIME_OUT = 1800;
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(WelcomeActivity.this, SignInActivity.class);
 

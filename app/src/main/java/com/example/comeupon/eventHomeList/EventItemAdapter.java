@@ -1,52 +1,59 @@
 package com.example.comeupon.eventHomeList;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comeupon.Models.Event;
+import com.example.comeupon.Models.Profile;
 import com.example.comeupon.R;
-import com.google.android.gms.maps.MapView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
-public class EventItemAdapter extends RecyclerView.Adapter<MapLocationViewHolder>{
+public class EventItemAdapter extends RecyclerView.Adapter<EventItemAdapter.MapLocationViewHolder>{
 
-    protected HashSet<MapView> mMapViews = new HashSet<>();
-    protected ArrayList<EventItem> mEventItem;
-
-    public void setMapLocations(ArrayList<EventItem> mapLocations) {
-        mEventItem = mapLocations;
+    private final ArrayList<Event> mEventItem;
+    private final OnEventListener mEventListener;
+    public EventItemAdapter(ArrayList<Event> eventItem, OnEventListener eventListener) {
+        mEventItem = eventItem;
+        mEventListener = eventListener;
     }
 
     @NonNull
     @Override
     public MapLocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_item, parent, false);
-        MapLocationViewHolder viewHolder = new MapLocationViewHolder(parent.getContext(), view);
-
-        mMapViews.add(viewHolder.mapView);
-
-        return viewHolder;
+        return new MapLocationViewHolder(parent.getContext(), view, mEventListener);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MapLocationViewHolder holder, int position) {
-        EventItem mapLocation = mEventItem.get(position);
+        Event event = mEventItem.get(position);
+        Profile owner = event.getOwner();
 
-        holder.mapView.setTag(mapLocation);
-        holder.eventDate.setText(mapLocation.Date);
-        holder.eventHour.setText(mapLocation.Hour);
-        holder.title.setText(mapLocation.Title);
-        holder.imageView1.setImageResource(mapLocation.images.get(0));
-        holder.imageView2.setImageResource(mapLocation.images.get(1));
-        holder.imageView3.setImageResource(mapLocation.images.get(2));
-        holder.setMapLocation(mapLocation);
+
+        holder.username.setText(owner.getUser().getUsername());
+        Picasso.get()
+                .load(owner.getImage())
+                .into(holder.imageUser);
+
+        holder.title.setText(event.getTitle());
+        Picasso.get()
+                .load(event.getImage())
+                .into(holder.imageEvent);
+        holder.eventDate.setText(event.getEnd_date().getMonth().toString());
+        holder.eventHour.setText(event.getStart_date().getHour()+"-"+event.getEnd_date().getHour());
+
+
     }
 
     @Override
@@ -54,7 +61,41 @@ public class EventItemAdapter extends RecyclerView.Adapter<MapLocationViewHolder
         return mEventItem == null ? 0 : mEventItem.size();
     }
 
-    public HashSet<MapView> getMapViews() {
-        return mMapViews;
+    public interface OnEventListener{
+        void onEventClick(int position);
+    }
+
+    public static class MapLocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView title;
+        public TextView eventDate;
+        public TextView eventHour;
+        public TextView username;
+        public ImageView imageEvent, imageUser;
+        public OnEventListener mOnEventListener;
+
+        private final Context mContext;
+
+
+
+        public MapLocationViewHolder(Context context, View view,OnEventListener onEventListener){
+            super(view);
+
+            mContext = context;
+            mOnEventListener = onEventListener;
+
+            title = view.findViewById(R.id.event_item_title);
+            imageEvent = view.findViewById(R.id.event_item_image);
+            imageUser = view.findViewById(R.id.event_item_image_user);
+            username = view.findViewById(R.id.event_item_username);
+            eventDate = view.findViewById(R.id.event_item_date);
+            eventHour = view.findViewById(R.id.event_item_time);
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mOnEventListener.onEventClick(getAdapterPosition());
+        }
     }
 }

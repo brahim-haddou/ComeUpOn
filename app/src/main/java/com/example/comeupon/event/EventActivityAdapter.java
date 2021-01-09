@@ -1,25 +1,29 @@
 package com.example.comeupon.event;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.comeupon.R;
-import com.example.comeupon.eventHomeList.EventItem;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comeupon.Models.Activity;
+import com.example.comeupon.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 class EventActivityAdapter extends RecyclerView.Adapter<EventActivityAdapter.Activity_eventViewHolder> {
 
-    ArrayList<Activity_event> activities;
-
-    public EventActivityAdapter(ArrayList<Activity_event> activities) {
+    ArrayList<Activity> activities;
+    ArrayList<Bitmap> images;
+    public EventActivityAdapter(ArrayList<Activity> activities, ArrayList<Bitmap> images) {
         this.activities = activities;
+        this.images = images;
     }
 
     @NonNull
@@ -34,13 +38,18 @@ class EventActivityAdapter extends RecyclerView.Adapter<EventActivityAdapter.Act
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull EventActivityAdapter.Activity_eventViewHolder holder, int position) {
-        Activity_event activity = activities.get(position);
 
-        holder.name.setText(activity.name);
-        holder.image.setImageBitmap(activity.image);
-        holder.category.setText(activity.category);
-        holder.number_activity.setText(""+activity.number_activity);
-        holder.number_participant.setText(""+activity.number_participant);
+        Activity activity = activities.get(position);
+        holder.name.setText(activity.getName());
+        holder.category.setText(activity.getCategory());
+        holder.number_activity.setText(""+activity.getNumber_Activity());
+        holder.number_participant.setText(""+activity.getNumber_Participant());
+        if(images != null){
+            Bitmap bitmap = images.get(position);
+            holder.image.setImageBitmap(bitmap);
+        }else {
+            Picasso.get().load(activity.getImage()).into(holder.image);
+        }
     }
 
     @Override
