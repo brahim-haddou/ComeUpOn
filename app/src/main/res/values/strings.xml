@@ -25,4 +25,13 @@
     <string name="title_activity_test">Map</string>
     <string name="search_text">Search..</string>
     <string name="text">I am a newbie in Android. I have a requirement where I have to add the imageViews dynamically onto a linear layout and then have to animate each image individually. I am not aware of the way to add the imageViews dynamically onto a linear layout. Plz help me out. Thanks</string>
+    <string name="join">+join</string>
+    <string name="activities">Activities</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="server_client_id">2774872024-b2pqupg9gt4dhubjo678ebhthvvb1i0s.apps.googleusercontent.com</string>
+    <string name="client_secret">HkjOIXFJ890oYhuMf4mhsFya</string>
+    <string name="firstname">FirstName</string>
+    <string name="lastname">LastName</string>
+
+
 </resources>

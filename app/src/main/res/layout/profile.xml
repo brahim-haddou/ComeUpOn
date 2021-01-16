@@ -26,8 +26,6 @@
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
                 android:text="follow" />
 
             <androidx.cardview.widget.CardView
@@ -40,6 +38,7 @@
                     android:id="@+id/profile_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:scaleType="fitXY"
                     android:src="@color/teal_200"
                     android:contentDescription="@string/todo" />
             </androidx.cardview.widget.CardView>

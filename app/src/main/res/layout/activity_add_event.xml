@@ -1,174 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".event.AddEventActivity">
 
-    <LinearLayout
+
+        <ScrollView
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
-            <TextView
-                android:layout_marginBottom="10dp"
-                android:transitionName="Logo_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/bowlby_one_sc"
-                android:textColor="@color/purple_500"
-                android:text="Add Event"
-                android:textSize="24sp"/>
-
-            <ImageView
-                android:id="@+id/add_event_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/ic_baseline_location_on_24"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Title">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_event_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:gravity="top|start"
-                android:layout_marginBottom="10dp"
-                android:hint="Description">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_event_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:inputType="text|textMultiLine"
-                    android:gravity="top|start" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Date">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_event_date"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"/>
-            </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_margin="20dp"
+                android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1">
-                    <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/bowlby_one_sc"
+                    android:text="Add Event"
+                    android:textColor="@color/purple_500"
+                    android:textSize="24sp"
+                    android:transitionName="Logo_text" />
+
+                <ImageView
+                    android:id="@+id/add_event_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/ic_baseline_location_on_24"
+                    android:scaleType="fitXY" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/add_event_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="top|start"
+                    android:hint="Description">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/add_event_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:gravity="top|start"
+                        android:inputType="text|textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Date">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/add_event_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="From">
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:inputType="date" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/add_event_start_time"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="time"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </androidx.cardview.widget.CardView>
+                            android:hint="From">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_marginStart="5dp"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/add_event_start_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:inputType="time" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="To">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/add_event_end_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:inputType="time" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginBottom="10dp"
+                    android:hint="Address">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/add_event_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="To">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/add_event_end_time"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="time"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </androidx.cardview.widget.CardView>
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:onClick="getAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/add_event_activities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
 
-            <com.google.android.material.textfield.TextInputLayout
+
+            <Button
+                android:id="@+id/add_event_add_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="addActivityToEvent"
+                android:text="add activity" />
+
+            <Button
+                android:id="@+id/add_event_add_event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Address">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:onClick="getAddress"
-                    android:id="@+id/add_event_address"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
+                android:text="add Event" />
         </LinearLayout>
+    </ScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_event_activities"/>
+    <ProgressBar
+        android:id="@+id/add_event_progress_bar"
+        android:layout_centerVertical="true"
+        android:indeterminateTint="@color/purple_500"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"/>
 
-        <Button
-            android:onClick="addActivityToEvent"
-            android:id="@+id/add_event_add_activity"
-            android:text="add activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"/>
+</RelativeLayout>
 
-        <Button
-            android:id="@+id/add_event_add_event"
-            android:text="add Event"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"/>
-    </LinearLayout>
-</ScrollView>
 
 
 

@@ -1,7 +1,9 @@
 package com.example.comeupon;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -12,6 +14,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comeupon.Models.Profile;
+import com.example.comeupon.VolleyApi.AppDataService;
+import com.example.comeupon.eventHomeList.EventListActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -39,16 +45,57 @@ public class WelcomeActivity extends AppCompatActivity {
 
         int TIME_OUT = 1800;
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(WelcomeActivity.this, SignInActivity.class);
 
-            Pair[] pairs = new Pair[2];
-            pairs[0] = new Pair<>(ImageLogo, "Logo_image");
-            pairs[1] = new Pair<View,String>(TextLogo,"Logo_text");
+            //Retrieve token wherever necessary
+            SharedPreferences preferences = WelcomeActivity.this.getSharedPreferences("MY_APP",Context.MODE_PRIVATE);
+            String token  = preferences.getString("TOKEN",null);//second parameter default value.
 
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(WelcomeActivity.this,pairs);
-            startActivity(intent,options.toBundle());
-            finish();
+            if(token == null){
+                toSignIn();
+            }else {
+
+                AppDataService appDataService = new AppDataService(WelcomeActivity.this);
+                appDataService.getMyUserProfile(token, new AppDataService.ProfileResponseListener() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        toEventList(token, profile);
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        toCreateProfile(token);
+                    }
+                });
+            }
+
         }, TIME_OUT);
 
+
+    }
+
+    public void toSignIn(){
+        Intent intent = new Intent(WelcomeActivity.this, SignInActivity.class);
+
+        Pair[] pairs = new Pair[2];
+        pairs[0] = new Pair<>(ImageLogo, "Logo_image");
+        pairs[1] = new Pair<View,String>(TextLogo,"Logo_text");
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(WelcomeActivity.this,pairs);
+        startActivity(intent,options.toBundle());
+        finish();
+    }
+    public void toEventList(String to, Profile pro){
+        Intent intent = new Intent(WelcomeActivity.this, EventListActivity.class);
+        intent.putExtra("key", to);
+        intent.putExtra("Profile", pro);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toCreateProfile(String to){
+        Intent intent = new Intent(WelcomeActivity.this, CreateProfileActivity.class);
+        intent.putExtra("key", to);
+        startActivity(intent);
+        finish();
     }
 }

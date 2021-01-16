@@ -53,6 +53,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_username_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:transitionName="UserName">
@@ -71,6 +72,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:transitionName="PassWord"

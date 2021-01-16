@@ -15,8 +15,10 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -27,8 +29,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comeupon.Models.Activity;
 import com.example.comeupon.Models.Event;
 import com.example.comeupon.Models.PlaceApp;
+import com.example.comeupon.Models.Profile;
 import com.example.comeupon.R;
 import com.example.comeupon.VolleyApi.AppDataService;
+import com.example.comeupon.eventHomeList.EventListActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -51,6 +55,9 @@ import java.util.Objects;
 
 public class AddEventActivity extends AppCompatActivity {
 
+    private String TOKEN;
+    private Profile mProfile;
+
     int eYear, eMonth, eDay;
     int EndHour, EndMinute;
     int StartHour, StartMinute;
@@ -68,13 +75,11 @@ public class AddEventActivity extends AppCompatActivity {
 
     TextInputEditText address;
 
-    ImageView add_activity_image;
-    TextInputEditText add_activity_category;
-    TextInputEditText add_activity_name;
-    TextInputEditText activities_number;
-    TextInputEditText participants_number;
-    Button add_activity;
+
+    Button add_activity_to_event;
     Button add_event;
+
+    ProgressBar progressBar;
 
     protected EventActivityAdapter activityAdapter;
     protected RecyclerView activityRecyclerView;
@@ -91,7 +96,12 @@ public class AddEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_event);
+
+
+        TOKEN = getIntent().getStringExtra("key");
+        mProfile = (Profile) getIntent().getSerializableExtra("Profile");
 
         image = findViewById(R.id.add_event_image);
         image.setOnClickListener(view1 -> selectImage(IMAGE_PICKER_REQUEST_EVENT));
@@ -105,15 +115,11 @@ public class AddEventActivity extends AppCompatActivity {
 
         address = findViewById(R.id.add_event_address);
 
-        add_event = findViewById(R.id.add_event_add_event);
-        add_event.setOnClickListener(view1 -> {
-            try {
-                addEventJson();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
+        add_activity_to_event = findViewById(R.id.add_event_add_activity);
 
+        add_event = findViewById(R.id.add_event_add_event);
+        add_event.setOnClickListener(view1 ->  addEventJson());
+        progressBar = findViewById(R.id.add_event_progress_bar);
 
 
         Calendar calendar = Calendar.getInstance();
@@ -256,10 +262,18 @@ public class AddEventActivity extends AppCompatActivity {
         }
     }
 
+    ImageView add_activity_image;
     public void addActivityToEvent(View view){
 
         Dialog mDialog = new Dialog(this);
         mDialog.setContentView(R.layout.add_activity);
+
+        TextInputEditText add_activity_category;
+        TextInputEditText add_activity_name;
+        TextInputEditText activities_number;
+        TextInputEditText participants_number;
+        Button add_activity;
+
 
         add_activity_image = mDialog.findViewById(R.id.add_activity_image_item);
         add_activity_image.setOnClickListener(view1 -> selectImage(IMAGE_PICKER_REQUEST_ACTIVITY));
@@ -286,63 +300,82 @@ public class AddEventActivity extends AppCompatActivity {
         mDialog.show();
     }
 
-    void addEventJson() throws JSONException {
-        JSONObject eventJson = new JSONObject();
+    void addEventJson() {
+        try{
+            progressBar.setVisibility(View.VISIBLE);
 
-        // place_event
-        JSONObject placeJson = new JSONObject();
-        placeJson.put("address", eventPlaceApp.getAddress());
-        placeJson.put("city",eventPlaceApp.getCity());
-        placeJson.put("country",eventPlaceApp.getCountry());
-        placeJson.put("lat",eventPlaceApp.getLat());
-        placeJson.put("lan",eventPlaceApp.getLan());
+            image.setOnClickListener(null);
+            title.setFocusable(View.NOT_FOCUSABLE);
+            title.setFocusableInTouchMode(false);
+            description.setFocusable(View.NOT_FOCUSABLE);
+            description.setFocusableInTouchMode(false);
+            startTime.setOnClickListener(null);
+            endTime.setOnClickListener(null);
+            eventDate.setOnClickListener(null);
+            address.setOnClickListener(null);
+            add_activity_to_event.setOnClickListener(null);
+            add_event.setOnClickListener(null);
 
-        eventJson.put("place_event", placeJson);
-        // activityEvent
-        JSONArray activitiesJson = new JSONArray();
+            JSONObject eventJson = new JSONObject();
+            // place_event
+            JSONObject placeJson = new JSONObject();
+            placeJson.put("address", eventPlaceApp.getAddress());
+            placeJson.put("city",eventPlaceApp.getCity());
+            placeJson.put("country",eventPlaceApp.getCountry());
+            placeJson.put("lat",eventPlaceApp.getLat());
+            placeJson.put("lan",eventPlaceApp.getLan());
 
-        int cpt=0;
-        for (Activity activity:mEventActivities) {
-            JSONObject activityJson = new JSONObject();
-            activityJson.put("name", activity.getName());
-            activityJson.put("category",activity.getCategory());
-            activityJson.put("image",bitmapToSting(mEventImagesActivities.get(cpt)));
-            activityJson.put("number_Activity",activity.getNumber_Activity());
-            activityJson.put("number_Participant",activity.getNumber_Participant());
-            activitiesJson.put(activityJson);
-            cpt++;
+            eventJson.put("place_event", placeJson);
+            // activityEvent
+            JSONArray activitiesJson = new JSONArray();
+
+            int cpt=0;
+            for (Activity activity:mEventActivities) {
+                JSONObject activityJson = new JSONObject();
+                activityJson.put("name", activity.getName());
+                activityJson.put("category",activity.getCategory());
+                activityJson.put("image",bitmapToSting(mEventImagesActivities.get(cpt)));
+                activityJson.put("number_Activity",activity.getNumber_Activity());
+                activityJson.put("number_Participant",activity.getNumber_Participant());
+                activitiesJson.put(activityJson);
+                cpt++;
+            }
+
+            eventJson.put("activityEvent", activitiesJson);
+            // title
+            eventJson.put("title", title.getText());
+            // image
+            Bitmap bitmapEvent = ((BitmapDrawable)image.getDrawable()).getBitmap();
+            eventJson.put("image",bitmapToSting(bitmapEvent));
+            // description
+            eventJson.put("description", description.getText());
+            // start_date
+            eventJson.put("start_date", String.valueOf(LocalDateTime.of(eYear,(eMonth+1),eDay, StartHour, StartMinute,0)));
+            // end_date
+            eventJson.put("end_date", String.valueOf(LocalDateTime.of(eYear,(eMonth+1),eDay, EndHour, EndMinute,0)));
+
+            Log.e("eventJson------------------------->\n", ":"+ eventJson.toString());
+
+            AppDataService appDataService = new AppDataService(this);
+            appDataService.setEvent(TOKEN ,eventJson, new AppDataService.CreateEventResponseListener() {
+                @Override
+                public void onSuccess(Event event) {
+                    Toast.makeText(AddEventActivity.this, event.toString(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.putExtra("Event", event);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(AddEventActivity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }catch (JSONException e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-        eventJson.put("activityEvent", activitiesJson);
-        // owner
-        eventJson.put("owner_id", 7);
-        // title
-        eventJson.put("title", title.getText());
-        // image
-        Bitmap bitmapEvent = ((BitmapDrawable)add_activity_image.getDrawable()).getBitmap();
-        eventJson.put("image",bitmapToSting(bitmapEvent));
-        // description
-        eventJson.put("description", description.getText());
-        // start_date
-
-        eventJson.put("start_date", String.valueOf(LocalDateTime.of(eYear,(eMonth+1),eDay, StartHour, StartMinute,0)));
-        // end_date
-        eventJson.put("end_date", String.valueOf(LocalDateTime.of(eYear,(eMonth+1),eDay, EndHour, EndMinute,0)));
-
-        Log.e("eventJson------------------------->\n", ":"+ eventJson.toString());
-
-        AppDataService appDataService = new AppDataService(this);
-        appDataService.setEvent(eventJson, new AppDataService.CreateEventResponseListener() {
-            @Override
-            public void onSuccess(Event event) {
-                Toast.makeText(AddEventActivity.this, event.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(String error) {
-                Toast.makeText(AddEventActivity.this, error, Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 
@@ -358,5 +391,11 @@ public class AddEventActivity extends AppCompatActivity {
         image.compress(Bitmap.CompressFormat.PNG,100, byteArrayOutputStream);
         byte[] b=byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(b, Base64.DEFAULT);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

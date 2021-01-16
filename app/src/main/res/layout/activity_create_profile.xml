@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    tools:context=".CreateProfileActivity">
+
+    <TextView
+        android:transitionName="Logo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bowlby_one_sc"
+        android:textColor="@color/purple_500"
+        android:text="Create Your Profile"
+        android:textSize="30sp"/>
+
+    <ImageView
+        android:id="@+id/create_profile_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_baseline_location_on_24"
+        android:scaleType="fitXY" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="Phone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/create_profile_phone"
+            android:layout_width="match_parent"
+            android:transitionName="UserName"
+            android:inputType="phone"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="Address">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/create_profile_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="birthday">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/create_profile_birthday"
+            android:layout_width="match_parent"
+            android:inputType="date"
+            android:transitionName="PassWord"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/create_profile_btn"
+        android:transitionName="SignButton1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/purple_500"
+        android:text="@string/sign_up" />
+
+
+
+</LinearLayout>

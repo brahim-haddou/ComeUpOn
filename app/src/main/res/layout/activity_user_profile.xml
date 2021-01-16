@@ -7,7 +7,6 @@
     tools:context=".UserProfileActivity">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@color/teal_200"
+                    android:scaleType="fitXY"
                     android:contentDescription="@string/todo" />
             </androidx.cardview.widget.CardView>
 
@@ -137,7 +137,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/UserName"
+                        android:text="Following"
                         android:textSize="20sp"
                         android:id="@+id/num_numberimg"
                         android:layout_below="@id/user_profile_number_following"
@@ -157,25 +157,25 @@
             android:padding="20dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:focusable="false"
-                android:focusableInTouchMode="false"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Full Name">
+                android:hint="@string/full_name">
+
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_profile_full_name_input"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/user"
-                    android:text="Full Name" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
-                android:focusable="false"
-                android:focusableInTouchMode="false"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -185,16 +185,12 @@
                     android:id="@+id/user_profile_email_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_mail_24"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:text="Email" />
+                    android:drawableStart="@drawable/ic_baseline_mail_24"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:focusable="false"
-                android:focusableInTouchMode="false"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -202,16 +198,14 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_profile_phone_input"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:drawableStart="@drawable/ic_baseline_phone_24"
-                    android:text="00000" />
+                    android:drawableStart="@drawable/ic_baseline_phone_24"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:layout_width="match_parent"
@@ -221,18 +215,14 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_profile_birthday_input"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
-                    android:drawableStart="@drawable/ic_baseline_calendar_today_24"
-                    android:text="00-00-0000" />
+                    android:drawableStart="@drawable/ic_baseline_calendar_today_24"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:focusable="false"
-                android:focusableInTouchMode="false"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -240,12 +230,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_profile_address_input"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_location_on_24"
-                    android:text="Adress" />
+                    android:drawableStart="@drawable/ic_baseline_location_on_24" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
