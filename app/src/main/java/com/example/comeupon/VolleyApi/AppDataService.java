@@ -26,8 +26,8 @@ import java.util.Map;
 public class AppDataService {
 
 
-    public static final String BASE_URL_API = "http://192.168.1.4:8000/API/v1";
-    public static final String BASE_URL = "http://192.168.1.4:8000";
+    public static final String BASE_URL_API = "http://192.168.1.7:8000/API/v1";
+    public static final String BASE_URL = "http://192.168.1.7:8000";
 
     Context ctx;
 
@@ -444,19 +444,11 @@ public class AppDataService {
         void onSuccess(Boolean participants);
         void onFailure(String error);
     }
-    public void RequestsParticipant(String key, int id_event,int id_Profile, RequestsParticipantsResponseListener requestsParticipantsResponseListener){
-        JSONObject JSON = new JSONObject();
-        try {
-            JSON.put("event_participant_id", id_event);
-            JSON.put("user_participant_id", id_Profile);
-            JSON.put("stat", 0);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void RequestsParticipant(String key, int id_event, RequestsParticipantsResponseListener requestsParticipantsResponseListener){
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                BASE_URL_API + "/Event/"+id_event+"/Participant/"+id_Profile+"/",
-                JSON,
+                BASE_URL_API + "/Event/"+id_event+"/Participant/",
+                null,
                 response -> {
                     Boolean state = Boolean.FALSE;
                     try {
@@ -483,56 +475,34 @@ public class AppDataService {
         ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
     }
 
-
-
-    public interface FollowersResponseListener{
-        void onSuccess(ArrayList<Profile> followers);
-        void onFailure(String error);
-    }
-    public void getFollowers(int id,FollowersResponseListener followersResponseListener){
-        JsonArrayRequest request = new JsonArrayRequest(
+    public void ParticipantState(String key, int id_event, RequestsParticipantsResponseListener requestsParticipantsResponseListener){
+                JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                BASE_URL_API + "/Profile/"+id+"/Followers/",
+                BASE_URL_API + "/Event/"+id_event+"/Participant/State/",
                 null,
                 response -> {
-                    ArrayList<Profile> followers = new ArrayList<>();
-                    for (int i = 0; i < response.length() ; i++) {
-                        try {
-                            followers.add(jsonObjectToProfile(response.getJSONObject(i)));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    Log.e("======PATCH=========",response.toString());
+                    Boolean state = Boolean.FALSE;
+                    try {
+                        state = response.getBoolean("stat");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    followersResponseListener.onSuccess(followers);
+                    requestsParticipantsResponseListener.onSuccess(state);
                 },
-                error -> followersResponseListener.onFailure(error.getMessage()));
+                error -> requestsParticipantsResponseListener.onFailure(error.getMessage())){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
 
-        ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
-    }
-
-
-
-    public interface FollowingResponseListener{
-        void onSuccess(ArrayList<Profile> following);
-        void onFailure(String error);
-    }
-    public void getFollowing(int id,FollowingResponseListener followingResponseListener){
-        JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET,
-                BASE_URL_API + "/Profile/"+id+"/Follow/",
-                null,
-                response -> {
-                    ArrayList<Profile> following = new ArrayList<>();
-                    for (int i = 0; i < response.length() ; i++) {
-                        try {
-                            following.add(jsonObjectToProfile(response.getJSONObject(i)));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    followingResponseListener.onSuccess(following);
-                },
-                error -> followingResponseListener.onFailure(error.getMessage()));
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+ key);
+                return headers;
+            }
+        };
 
         ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
     }
@@ -569,5 +539,225 @@ public class AppDataService {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+
+    public interface FollowersResponseListener{
+        void onSuccess(ArrayList<Profile> followers);
+        void onFailure(String error);
+    }
+    public void MeFollowing(String key,FollowersResponseListener followersResponseListener){
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                BASE_URL_API + "/MeFollowing/",
+                null,
+                response -> {
+                    ArrayList<Profile> followers = new ArrayList<>();
+                    for (int i = 0; i < response.length() ; i++) {
+                        try {
+                            followers.add(jsonObjectToProfile(response.getJSONObject(i)));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    followersResponseListener.onSuccess(followers);
+                },
+                error -> followersResponseListener.onFailure(error.getMessage())){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+ key);
+                return headers;
+            }
+        };
+
+        ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
+    }
+
+
+    public void MyFollowers(String key,FollowersResponseListener followersResponseListener){
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                BASE_URL_API + "/MyFollowers/",
+                null,
+                response -> {
+                    ArrayList<Profile> followers = new ArrayList<>();
+                    for (int i = 0; i < response.length() ; i++) {
+                        try {
+                            followers.add(jsonObjectToProfile(response.getJSONObject(i)));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    followersResponseListener.onSuccess(followers);
+                },
+                error -> followersResponseListener.onFailure(error.getMessage())){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+ key);
+                return headers;
+            }
+        };
+
+        ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
+    }
+    public interface AmIFollowingListener{
+        void onSuccess(Boolean bool);
+        void onFailure(String error);
+    }
+
+    public void AmIFollowing(String key, int profile_id, AmIFollowingListener amIFollowingListener){
+        JsonObjectRequest request = new JsonObjectRequest(
+            Request.Method.GET,
+            BASE_URL_API + "/AmIFollowing/"+profile_id+"/",
+            null,
+            response -> {
+                Boolean state = Boolean.FALSE;
+                try {
+                    state = response.getBoolean("Bool");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                amIFollowingListener.onSuccess(state);
+            },
+            error -> {
+                amIFollowingListener.onFailure(error.getMessage());
+            }
+        ){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+ key);
+                return headers;
+            }
+        };
+
+        ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
+    }
+
+    public void Follow(String key, int profile_id, AmIFollowingListener amIFollowingListener){
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                BASE_URL_API + "/AmIFollowing/"+profile_id+"/",
+                null,
+                response -> {
+                    Boolean state = Boolean.FALSE;
+                    try {
+                        state = response.getBoolean("Bool");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    amIFollowingListener.onSuccess(state);
+                },
+                error -> {
+                    amIFollowingListener.onFailure(error.getMessage());
+                }
+        ){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+ key);
+                return headers;
+            }
+        };
+
+        ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
+    }
+
+    public void UnFollow(String key, int profile_id, AmIFollowingListener amIFollowingListener){
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.PUT,
+                BASE_URL_API + "/AmIFollowing/"+profile_id+"/",
+                null,
+                response -> {
+                    Boolean state = Boolean.FALSE;
+                    try {
+                        state = response.getBoolean("Bool");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    amIFollowingListener.onSuccess(state);
+                },
+                error -> {
+                    amIFollowingListener.onFailure(error.getMessage());
+                }
+        ){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+ key);
+                return headers;
+            }
+        };
+
+        ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
+    }
+
+    public interface FollowParticipantListener{
+        void onSuccess(int follow,int follower);
+        void onFailure(String error);
+    }
+
+    public void FollowParticipant(String key, int profile_id, FollowParticipantListener followParticipantListener){
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                BASE_URL_API + "/Participant/"+profile_id+"/Follow/",
+                null,
+                response -> {
+                    int follow=0;
+                    int follower=0;
+                    try {
+                        follow = response.getInt("follow");
+                        follower = response.getInt("follower");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    followParticipantListener.onSuccess(follow, follower);
+                },
+                error -> {
+                    followParticipantListener.onFailure(error.getMessage());
+                }
+        ){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+ key);
+                return headers;
+            }
+        };
+
+        ApiCallSingleton.getInstance(ctx).addToRequestQueue(request);
     }
 }

@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComeUpOn"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateProfileActivity"></activity>
+        <activity android:name=".event.FollowersActivity"></activity>
+        <activity android:name=".CreateProfileActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -56,13 +57,13 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission
         android:name="android.permission.INTERNET"
         tools:ignore="ManifestOrder" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

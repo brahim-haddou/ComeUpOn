@@ -1,8 +1,5 @@
 package com.example.comeupon;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,18 +9,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.comeupon.Models.Activity;
-import com.example.comeupon.Models.Event;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.comeupon.Models.PlaceApp;
 import com.example.comeupon.Models.Profile;
 import com.example.comeupon.VolleyApi.AppDataService;
-import com.example.comeupon.event.AddEventActivity;
 import com.example.comeupon.eventHomeList.EventListActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -31,17 +27,17 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
 public class CreateProfileActivity extends AppCompatActivity {
+
+    String TOKEN;
 
     ImageView image;
     TextInputEditText phone;
@@ -49,7 +45,6 @@ public class CreateProfileActivity extends AppCompatActivity {
     TextInputEditText birthday;
     Button create_btn;
 
-    String TOKEN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

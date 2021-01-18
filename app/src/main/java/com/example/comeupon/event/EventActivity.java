@@ -185,11 +185,6 @@ public class EventActivity extends AppCompatActivity implements OnMapReadyCallba
                 mParticipantAccepted.addAll(participants);
                 participantAdapterAccepted.notifyDataSetChanged();
 
-                if(mParticipantAccepted.contains(mProfile)){
-                    JoinBtn.setText("Accepted");
-                    JoinBtn.setEnabled(false);
-                }
-
                 if(mParticipantAccepted.size() >= 3){
                     Picasso.get().load(mParticipantAccepted.get(0).getImage()).into(imagePart1);
                     Picasso.get().load(mParticipantAccepted.get(1).getImage()).into(imagePart2);
@@ -213,32 +208,28 @@ public class EventActivity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-        appDataService.getParticipant(TOKEN, mEvent.getId(), 0,new AppDataService.ParticipantsResponseListener() {
-            @Override
-            public void onSuccess(ArrayList<Profile> participantRequests) {
 
-                if(participantRequests.contains(mProfile)){
-                    Toast.makeText(EventActivity.this, "Waiting", Toast.LENGTH_SHORT).show();
-                    JoinBtn.setText("Waiting");
-                    JoinBtn.setEnabled(false);
-                }
 
-                if(mProfile.getId() == owner.getId()){
-                    JoinBtn.setVisibility(View.INVISIBLE);
+        if(mProfile.getId() == owner.getId()){
+            JoinBtn.setVisibility(View.INVISIBLE);
+            appDataService.getParticipant(TOKEN, mEvent.getId(), 0,new AppDataService.ParticipantsResponseListener() {
+                @Override
+                public void onSuccess(ArrayList<Profile> participantRequests) {
                     mParticipantRequests.addAll(participantRequests);
                     participantAdapterRequests.notifyDataSetChanged();
-                }else {
-                    Requests_txt.setVisibility(View.INVISIBLE);
-                    Accepted_txt.setVisibility(View.INVISIBLE);
                 }
-            }
-            @Override
-            public void onFailure(String error) {
+                @Override
+                public void onFailure(String error) {
 
-            }
-        });
+                }
+            });
+        }else {
+            Requests_txt.setVisibility(View.INVISIBLE);
+            Accepted_txt.setVisibility(View.INVISIBLE);
+        }
 
-        JoinBtn.setOnClickListener(view -> appDataService.RequestsParticipant(TOKEN, mEvent.getId(), mProfile.getId(), new AppDataService.RequestsParticipantsResponseListener() {
+
+        JoinBtn.setOnClickListener(view -> appDataService.RequestsParticipant(TOKEN, mEvent.getId(), new AppDataService.RequestsParticipantsResponseListener() {
             @Override
             public void onSuccess(Boolean accepted) {
                 if(!accepted){
@@ -252,6 +243,25 @@ public class EventActivity extends AppCompatActivity implements OnMapReadyCallba
 
             }
         }));
+
+        appDataService.ParticipantState(TOKEN, mEvent.getId(), new AppDataService.RequestsParticipantsResponseListener() {
+            @Override
+            public void onSuccess(Boolean accepted) {
+                if(accepted){
+                    Toast.makeText(EventActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
+                    JoinBtn.setText("Accepted");
+                    JoinBtn.setEnabled(false);
+                } else if(!accepted){
+                    Toast.makeText(EventActivity.this, "Waiting", Toast.LENGTH_SHORT).show();
+                    JoinBtn.setText("Waiting");
+                    JoinBtn.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+            }
+        });
     }
 
     @Override
@@ -268,9 +278,13 @@ public class EventActivity extends AppCompatActivity implements OnMapReadyCallba
 
 
 
+    Button follow;
     ImageView profileImage;
     TextView profileFullName;
     TextView profileUserName;
+
+    TextView follow_txt;
+    TextView follower_txt;
 
     TextInputEditText profileEmail;
     TextInputEditText profilePhone;
@@ -288,9 +302,14 @@ public class EventActivity extends AppCompatActivity implements OnMapReadyCallba
         @SuppressLint("InflateParams") View newView = inflater.inflate(R.layout.profile, null);
         mDialog.setContentView(newView);
 
+        follow = newView.findViewById(R.id.profile_btn_follow);
+
         profileImage = newView.findViewById(R.id.profile_image);
         profileFullName = newView.findViewById(R.id.profile_full_name);
         profileUserName = newView.findViewById(R.id.profile_username);
+
+        follow_txt = newView.findViewById(R.id.profile_number_following);
+        follower_txt = newView.findViewById(R.id.profile_number_followers);
 
         profileEmail = newView.findViewById(R.id.profile_email_input);
         profilePhone = newView.findViewById(R.id.profile_phone_input);
@@ -307,6 +326,60 @@ public class EventActivity extends AppCompatActivity implements OnMapReadyCallba
         profileBirthday.setText(profile.getBirthday());
         profileAddress.setText(profile.getPlaceApp().getCity()+", "+profile.getPlaceApp().getCountry());
 
+        appDataService.AmIFollowing(TOKEN, profile.getId(), new AppDataService.AmIFollowingListener() {
+            @Override
+            public void onSuccess(Boolean bool) {
+                if(bool){
+                    follow.setText("UnFollow");
+                    follow.setOnClickListener(view -> {
+                        appDataService.UnFollow(TOKEN, profile.getId(), new AppDataService.AmIFollowingListener() {
+                            @Override
+                            public void onSuccess(Boolean bool) {
+                                follow.setText("Follow");
+                                follow.setEnabled(false);
+                            }
+
+                            @Override
+                            public void onFailure(String error) {
+
+                            }
+                        });
+                    });
+                }else {
+                    follow.setOnClickListener(view -> {
+                        appDataService.Follow(TOKEN, profile.getId(), new AppDataService.AmIFollowingListener() {
+                            @Override
+                            public void onSuccess(Boolean bool) {
+                                follow.setText("UnFollow");
+                                follow.setEnabled(false);
+                            }
+
+                            @Override
+                            public void onFailure(String error) {
+
+                            }
+                        });
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
+        appDataService.FollowParticipant(TOKEN, profile.getId(), new AppDataService.FollowParticipantListener() {
+            @Override
+            public void onSuccess(int follow, int follower) {
+                follow_txt.setText(String.valueOf(follow));
+                follower_txt.setText(String.valueOf(follower));
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
         mDialog.show();
     }
 

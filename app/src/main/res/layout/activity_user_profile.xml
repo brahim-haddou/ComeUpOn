@@ -68,6 +68,7 @@
             android:layout_marginTop="-75dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_followers"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 app:cardBackgroundColor="@color/purple_200"
@@ -108,6 +109,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+
+                android:id="@+id/cardView_followings"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 app:cardBackgroundColor="@color/purple_200"

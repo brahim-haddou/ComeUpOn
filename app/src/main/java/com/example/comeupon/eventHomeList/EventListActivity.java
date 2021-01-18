@@ -1,5 +1,6 @@
 package com.example.comeupon.eventHomeList;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,9 +35,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class EventListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EventItemAdapter.OnEventListener {
-
-
+public class EventListActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        EventItemAdapter.OnEventListener {
 
     private String TOKEN;
     private Profile mProfile;
@@ -46,6 +47,8 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
+    ImageView addEvent_btn;
 
     ImageView menuIcon;
     ImageView user_image;
@@ -64,12 +67,14 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
         TOKEN = getIntent().getStringExtra("key");
         mProfile = (Profile) getIntent().getSerializableExtra("Profile");
 
-
         // menu
+        addEvent_btn = findViewById(R.id.add_btn);
+        addEvent_btn.setOnClickListener(view -> AddEvent());
         contentView = findViewById(R.id.content);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
 
+        navigationView.setNavigationItemSelectedListener(this);
 
         user_image     = navigationView.findViewById(R.id.menu_header_image);
         user_full_name = navigationView.findViewById(R.id.menu_header_full_name);
@@ -116,6 +121,7 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void navigationDrawer() {
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
@@ -170,8 +176,26 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.nav_home:
+                break;
+            case R.id.nav_add:
+                AddEvent();
+                break;
+            case R.id.nav_profile:
+                Intent intent = new Intent(EventListActivity.this, UserProfileActivity.class);
+                intent.putExtra("Profile", mProfile);
+                intent.putExtra("key", TOKEN);
+                startActivity(intent);
+                break;
+            case R.id.nav_logout:
+                LogOut();
+                break;
+        }
         return false;
     }
 
@@ -192,7 +216,7 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
     }
 
     int ADD_EVENT = 321;
-    public void AddEvent(View view) {
+    public void AddEvent() {
         Intent intent = new Intent(EventListActivity.this, AddEventActivity.class);
         intent.putExtra("Profile", mProfile);
         intent.putExtra("key", TOKEN);
@@ -206,7 +230,7 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
         startActivity(intent);
     }
 
-    public void test2(View view) {
+    public void LogOut() {
         AppDataService appDataService = new AppDataService(EventListActivity.this);
         appDataService.LogOut(TOKEN, new AppDataService.LogOutResponseListener() {
             @Override
@@ -222,11 +246,6 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
 
             }
             });
-    }
-
-    public void test3(View view) {
-        Intent intent = new Intent(EventListActivity.this, AddEventActivity.class);
-        startActivity(intent);
     }
 
     @Override
