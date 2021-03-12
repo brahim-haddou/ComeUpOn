@@ -65,6 +65,9 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         SignUp.setOnClickListener(view -> {
+            if(!SignUpFirstName() || !SignUpLastName() || !SignUpUserName() || !SignUpEmail() || !SignUpPassWord()){
+                return;
+            }
             AppDataService appDataService = new AppDataService(SignUpActivity.this);
             appDataService.SignUp(
                     FirstName.getEditText().getText().toString(),
@@ -88,6 +91,90 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
         });
+    }
+
+    public boolean SignUpFirstName(){
+        String username = FirstName.getEditText().getText().toString();
+        if(username.isEmpty()){
+            FirstName.setError("Field cannot be empty");
+            return false;
+        }else  if(username.length() <= 3){
+            FirstName.setError("FirstName to short");
+            return false;
+        } else  if(username.length() >= 15){
+            FirstName.setError("FirstName to long");
+            return false;
+        }else {
+            FirstName.setError(null);
+            FirstName.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean SignUpLastName(){
+        String username = LastName.getEditText().getText().toString();
+        if(username.isEmpty()){
+            LastName.setError("Field cannot be empty");
+            return false;
+        }else  if(username.length() <= 3){
+            LastName.setError("LastName to short");
+            return false;
+        } else  if(username.length() >= 15){
+            LastName.setError("LastName to long");
+            return false;
+        }else {
+            LastName.setError(null);
+            LastName.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    public boolean SignUpUserName(){
+        String username = UserName.getEditText().getText().toString();
+        if(username.isEmpty()){
+            UserName.setError("Field cannot be empty");
+            return false;
+        }else  if(username.length() <= 3){
+            PassWord.setError("UserName to short");
+            return false;
+        } else  if(username.length() >= 15){
+            PassWord.setError("UserName to long");
+            return false;
+        }else {
+            UserName.setError(null);
+            UserName.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean SignUpEmail(){
+        String username = Email.getEditText().getText().toString();
+        if(username.isEmpty()){
+            Email.setError("Field cannot be empty");
+            return false;
+        }else  if(username.length() <= 3){
+            Email.setError("FirstName to short");
+            return false;
+        }else {
+            Email.setError(null);
+            Email.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean SignUpPassWord(){
+        String password = PassWord.getEditText().getText().toString();
+        if(password.length() <= 3){
+            PassWord.setError("Field cannot be empty");
+            return false;
+        }else  if(password.length() <= 3){
+            PassWord.setError("PassWord to short");
+            return false;
+        } else  if(password.length() >= 15){
+            PassWord.setError("PassWord to long");
+            return false;
+        } else {
+            PassWord.setError(null);
+            UserName.setErrorEnabled(false);
+            return true;
+        }
     }
 
 }

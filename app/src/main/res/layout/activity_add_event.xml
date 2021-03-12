@@ -45,6 +45,7 @@
                     android:scaleType="fitXY" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/add_event_title_t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -57,6 +58,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/add_event_description_t"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginBottom="10dp"
@@ -72,6 +74,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/add_event_date_t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -99,6 +102,7 @@
                         android:layout_weight="1">
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/add_event_start_time_t"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="From">
@@ -120,6 +124,7 @@
                         android:layout_weight="1">
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/add_event_end_time_t"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="To">
@@ -138,6 +143,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/add_event_address_t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"

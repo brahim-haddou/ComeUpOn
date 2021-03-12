@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.toolbox.HttpResponse;
 import com.example.comeupon.Models.Profile;
+import com.example.comeupon.Models.User;
 import com.example.comeupon.VolleyApi.AppDataService;
 import com.example.comeupon.eventHomeList.EventListActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -85,6 +87,9 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         SignIn.setOnClickListener(view -> {
+            if( !LoginUserName() || !LoginPassWord()){
+                return;
+            }
             AppDataService appDataService = new AppDataService(SignInActivity.this);
             appDataService.logIn(UserName.getEditText().getText().toString(),
                     PassWord.getEditText().getText().toString(),
@@ -121,9 +126,26 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-
+    public boolean LoginUserName(){
+        String username = UserName.getEditText().getText().toString();
+        if(username.isEmpty()){
+            UserName.setError("Field cannot be empty");
+            return false;
+        }else {
+            UserName.setError(null);
+            UserName.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean LoginPassWord(){
+        String password = PassWord.getEditText().getText().toString();
+        if(password.isEmpty()){
+            PassWord.setError("Field cannot be empty");
+            return false;
+        }else {
+            PassWord.setError(null);
+            UserName.setErrorEnabled(false);
+            return true;
+        }
+    }
 }

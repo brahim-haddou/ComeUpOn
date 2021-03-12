@@ -26,8 +26,8 @@ import java.util.Map;
 public class AppDataService {
 
 
-    public static final String BASE_URL_API = "http://192.168.1.7:8000/API/v1";
-    public static final String BASE_URL = "http://192.168.1.7:8000";
+    public static final String BASE_URL_API = "http://192.168.43.10:8000/API/v1";
+    public static final String BASE_URL = "http://192.168.43.10:8000";
 
     Context ctx;
 

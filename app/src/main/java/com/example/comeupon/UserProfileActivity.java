@@ -61,7 +61,7 @@ public class UserProfileActivity extends AppCompatActivity {
             intent.putExtra("profiles", mFollowers);
             startActivity(intent);
         });
-        followings     = findViewById(R.id.cardView_followings);
+        followings = findViewById(R.id.cardView_followings);
         followings.setOnClickListener(view -> {
             Intent intent = new Intent(UserProfileActivity.this, FollowersActivity.class);
             intent.putExtra("key", TOKEN);
@@ -77,7 +77,7 @@ public class UserProfileActivity extends AppCompatActivity {
         user_username  = findViewById(R.id.user_profile_username);
         user_followers = findViewById(R.id.user_profile_number_followers);
         user_following = findViewById(R.id.user_profile_number_following);
-        full_name     = findViewById(R.id.user_profile_full_name_input);
+        full_name      = findViewById(R.id.user_profile_full_name_input);
         user_email     = findViewById(R.id.user_profile_email_input);
         user_phone     = findViewById(R.id.user_profile_phone_input);
         user_birthday  = findViewById(R.id.user_profile_birthday_input);

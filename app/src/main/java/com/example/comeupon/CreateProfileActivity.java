@@ -2,6 +2,7 @@ package com.example.comeupon;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -26,6 +27,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +45,9 @@ public class CreateProfileActivity extends AppCompatActivity {
     TextInputEditText phone;
     TextInputEditText address;
     TextInputEditText birthday;
+    TextInputLayout phoneT;
+    TextInputLayout addressT;
+    TextInputLayout birthdayT;
     Button create_btn;
 
     @Override
@@ -57,6 +62,11 @@ public class CreateProfileActivity extends AppCompatActivity {
         phone = findViewById(R.id.create_profile_phone);
         address = findViewById(R.id.create_profile_address);
         birthday = findViewById(R.id.create_profile_birthday);
+
+        phoneT = findViewById(R.id.create_profile_phone_t);
+        addressT = findViewById(R.id.create_profile_address_t);
+        birthdayT = findViewById(R.id.create_profile_birthday_t);
+
         create_btn = findViewById(R.id.create_profile_btn);
 
         image.setOnClickListener(view1 -> selectImage(IMAGE_PICKER_REQUEST_PROFILE));
@@ -140,6 +150,10 @@ public class CreateProfileActivity extends AppCompatActivity {
 
 
     void CreateProfileJson() {
+
+        if( !ProfileImage() || !ProfilePhone() || !ProfileBirthday() || !ProfileAddress()){
+            return;
+        }
         try{
 
             image.setOnClickListener(null);
@@ -189,6 +203,48 @@ public class CreateProfileActivity extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public boolean ProfilePhone(){
+        String username = phone.getText().toString();
+        if(username.isEmpty()){
+            phoneT.setError("Field cannot be empty");
+            return false;
+        }else {
+            phoneT.setError(null);
+            phoneT.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean ProfileImage(){
+        if(image.getDrawable() ==  null){
+            image.setColorFilter(32);
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public boolean ProfileBirthday(){
+        String password = birthday.getText().toString();
+        if(password.isEmpty()){
+            birthdayT.setError("Field cannot be empty");
+            return false;
+        }else {
+            birthdayT.setError(null);
+            birthdayT.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean ProfileAddress(){
+        String password = address.getText().toString();
+        if(password.isEmpty()){
+            addressT.setError("Field cannot be empty");
+            return false;
+        }else {
+            addressT.setError(null);
+            addressT.setErrorEnabled(false);
+            return true;
+        }
     }
 
 }

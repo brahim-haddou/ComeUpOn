@@ -38,6 +38,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +75,16 @@ public class AddEventActivity extends AppCompatActivity {
     TextInputEditText endTime;
 
     TextInputEditText address;
+
+
+    TextInputLayout titleT;
+    TextInputLayout descriptionT;
+
+    TextInputLayout eventDateT;
+    TextInputLayout startTimeT;
+    TextInputLayout endTimeT;
+
+    TextInputLayout addressT;
 
 
     Button add_activity_to_event;
@@ -114,6 +125,15 @@ public class AddEventActivity extends AppCompatActivity {
         eventDate = findViewById(R.id.add_event_date);
 
         address = findViewById(R.id.add_event_address);
+
+        titleT = findViewById(R.id.add_event_title_t);
+        descriptionT = findViewById(R.id.add_event_description_t);
+
+        startTimeT = findViewById(R.id.add_event_start_time_t);
+        endTimeT = findViewById(R.id.add_event_end_time_t);
+        eventDateT = findViewById(R.id.add_event_date_t);
+
+        addressT = findViewById(R.id.add_event_address_t);
 
         add_activity_to_event = findViewById(R.id.add_event_add_activity);
 
@@ -301,6 +321,9 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
     void addEventJson() {
+        if(!ProfileImage() || !EventTitle() || !EventDescription() || !EventDate() || !EventStartTime() || !EventEndTime() || !EventAddress()){
+            return;
+        }
         try{
             progressBar.setVisibility(View.VISIBLE);
 
@@ -397,5 +420,79 @@ public class AddEventActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+    public boolean ProfileImage(){
+        if(image.getDrawable() ==  null){
+            image.setColorFilter(32);
+            return false;
+        }else {
+            return true;
+        }
+    }
+    public boolean EventTitle(){
+        String password = title.getText().toString();
+        if(password.isEmpty()){
+            titleT.setError("Field cannot be empty");
+            return false;
+        }else {
+            titleT.setError(null);
+            titleT.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean EventDescription(){
+        String password = descriptionT.getEditText().getText().toString();
+        if(password.isEmpty()){
+            descriptionT.setError("Field cannot be empty");
+            return false;
+        }else {
+            descriptionT.setError(null);
+            descriptionT.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean EventDate(){
+        String password = eventDateT.getEditText().getText().toString();
+        if(password.isEmpty()){
+            eventDateT.setError("Field cannot be empty");
+            return false;
+        }else {
+            eventDateT.setError(null);
+            eventDateT.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean EventStartTime(){
+        String password = startTimeT.getEditText().getText().toString();
+        if(password.isEmpty()){
+            startTimeT.setError("Field cannot be empty");
+            return false;
+        }else {
+            startTimeT.setError(null);
+            startTimeT.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean EventEndTime(){
+        String password = endTimeT.getEditText().getText().toString();
+        if(password.isEmpty()){
+            endTimeT.setError("Field cannot be empty");
+            return false;
+        }else {
+            endTimeT.setError(null);
+            endTimeT.setErrorEnabled(false);
+            return true;
+        }
+    }
+    public boolean EventAddress(){
+        String password = addressT.getEditText().getText().toString();
+        if(password.isEmpty()){
+            addressT.setError("Field cannot be empty");
+            return false;
+        }else {
+            addressT.setError(null);
+            addressT.setErrorEnabled(false);
+            return true;
+        }
     }
 }
